@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medwise</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome-all.min.css') }}">
+</head>
+<body class="is-preload">
+    <header id="header" style="overflow: visible; padding-top: 40px; padding-bottom: 20px; text-align: center;">
+        <img src="{{ url_for('static', filename='assets/images/logo.jpg') }}" alt="MedWise Logo" style="width: 300px; height: auto; margin-top: 10px; margin-bottom: 20px;">
+        <h1>Upload an Image of Medicine</h1>
+    </header>
+    
+    <section id="main" class="wrapper">
+        <div class="inner">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required><br><br>
+                
+                <label for="langChoice">Select Language:</label>
+                <select name="langChoice" id="langChoice">
+                    <option value="1">English</option>
+                    <option value="2">Chinese</option>
+                </select><br><br>
+                
+                <label for="symptoms">Select Symptom:</label>
+                <select name="symptoms" id="symptoms" onchange="showSymptomInfo()">
+                    <option value="">-- Select a symptom --</option>
+                    <option value="fever">Fever</option>
+                    <option value="flu">Flu</option>
+                    <option value="headache">Headache</option>
+                    <option value="sorethroat">Sore Throat</option>
+                    <option value="stomachache">Stomach Ache</option>
+                </select><br><br>
+                
+                <div id="symptomInfo" style="margin-top: 10px; color: #555;"></div>
+                <img id="symptomImage" style="display: none; margin-top: 10px; max-width: 100px; float: right;" alt="Symptom Image">
+                
+                <!-- Button that appears after symptom is chosen -->
+                <button id="appointmentButton" type="button" style="display: none; margin-top: 20px;" class="button primary">Schedule an Appointment Now</button>
+                
+                <button type="submit" class="button primary">Upload and Process</button>
+            </form>
+            
+            <script>
+                function showSymptomInfo() {
+                    const symptomInfo = document.getElementById('symptomInfo');
+                    const symptomImage = document.getElementById('symptomImage');
+                    const symptom = document.getElementById('symptoms').value;
+                    const appointmentButton = document.getElementById('appointmentButton');
+                    
+                    // Clear previous content and hide the button
+                    symptomInfo.textContent = "";
+                    symptomImage.style.display = "none"; // Hide the image by default
+                    appointmentButton.style.display = "none"; // Hide the button by default
+                    
+                    // Update text and image based on the selected symptom
+                    if (symptom === "fever") {
+                        symptomInfo.textContent = "Fever is a common bodily response to infection, typically indicating that the immune system is actively fighting off bacteria, viruses, or other harmful organisms. Fever can cause discomfort, such as chills, sweating, and body aches, and often leaves you feeling tired or weak. It’s essential to stay hydrated during a fever because your body loses more fluids through sweating, which can lead to dehydration if not replenished. Drinking plenty of fluids, such as water, herbal teas, or clear broths, helps to replace lost fluids and supports the body in flushing out toxins. Additionally, getting adequate rest allows your body to focus its energy on fighting the infection, which can aid in a faster recovery. If a fever is persistent or very high, or if it’s accompanied by other concerning symptoms, consider consulting a healthcare professional to ensure appropriate treatment. - Dr Sim Yee Kai (Klinik Subang Perdana)";
+                        symptomImage.src = "{{ url_for('static', filename='assets/images/fever.jpg') }}";
+                        symptomImage.alt = "Image of Fever";
+                        symptomImage.style.display = "block"; // Make the image visible
+                    } else if (symptom === "flu") {
+                        symptomInfo.textContent = "Flu symptoms include fever, cough, and body aches. Stay hydrated and consult a doctor if symptoms persist.";
+                        symptomImage.src = "{{ url_for('static', filename='assets/images/flu.jpg') }}";
+                        symptomImage.alt = "Image of Flu";
+                        symptomImage.style.display = "block";
+                    } else if (symptom === "headache") {
+                        symptomInfo.textContent = "Headaches can be caused by stress, dehydration, or other factors. Try to rest and stay hydrated.";
+                        symptomImage.src = "{{ url_for('static', filename='assets/images/headache.jpg') }}";
+                        symptomImage.alt = "Image of Headache";
+                        symptomImage.style.display = "block";
+                    } else if (symptom === "sorethroat") {
+                        symptomInfo.textContent = "A sore throat can be a sign of a cold or infection. Drink warm fluids and rest your voice.";
+                        symptomImage.src = "{{ url_for('static', filename='assets/images/sorethroat.jpg') }}";
+                        symptomImage.alt = "Image of Sore Throat";
+                        symptomImage.style.display = "block";
+                    } else if (symptom === "stomachache") {
+                        symptomInfo.textContent = "Stomach aches may result from indigestion or other causes. Avoid heavy meals and rest.";
+                        symptomImage.src = "{{ url_for('static', filename='assets/images/stomachache.jpg') }}";
+                        symptomImage.alt = "Image of Stomach Ache";
+                        symptomImage.style.display = "block";
+                    }
+                    
+                    // Show the "Schedule an Appointment Now" button
+                    if (symptom !== "") {
+                        appointmentButton.style.display = "block";
+                    }
+                }
+            </script>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+</html>
