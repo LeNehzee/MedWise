@@ -8,7 +8,7 @@ import os
 import json
 
 
-genai.configure(api_key="AIzaSyBtTPZg5XbRORR8srTWPGdyjeCiDlnSMNo")  # Accessing Gemini API
+genai.configure(api_key="Your API Key")  # Accessing Gemini API
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "static/uploads"  # Folder for storing uploaded images
@@ -57,7 +57,7 @@ def upload_image():
     tts.save(audio_path)
 
     # Get nearest healthcare locations from Geoapify API
-    geoapify_url = "https://api.geoapify.com/v2/places?categories=healthcare&filter=circle:101.5920668,3.0513718,5000&bias=proximity:101.5920668,3.0513718&limit=20&apiKey=a38d47a9369642ca99480749f4933524"  # Replace with your Geoapify API key
+    geoapify_url = "https://api.geoapify.com/v2/places?categories=healthcare&filter=circle:101.5920668,3.0513718,5000&bias=proximity:101.5920668,3.0513718&limit=20&apiKey=Your API Key"  # Replace with your Geoapify API key
     response = requests.get(geoapify_url)
     json_data = response.json()
 
